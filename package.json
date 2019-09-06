@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "sh": " npx -n \"-r ts-node/register\" sharp-cli exec",
+    "test": "sharp-cli test",
     "solo": "node -e \"setInterval(()=>{},1000);\"",
     "sharp": "NODE_ENV=test mocha --require ts-node/register --timeout 20000 --exit './tests/my-token.test.ts'"
   },
