@@ -254,6 +254,18 @@ describe('MyToken', () => {
                 .equal(ret)
         })
 
+        it('transferFrom greater amount should revert', async () => {
+            const ret = await thor.account(address)
+                .method(myToken.ABI('transferFrom'))
+                .caller(addrTwo)
+                .call(addrOne, addrThree, toWei(101))
+
+            Assertion
+                .revert()
+                .with('VIP180: transfer amount exceeds allowance')
+                .equal(ret)
+        })
+
         it('transferFrom should emit Transfer and Approval event', async () => {
             const { txid } = await vendor.sign('tx')
                 .signer(addrTwo)
@@ -311,6 +323,52 @@ describe('MyToken', () => {
                 .method(myToken.ABI('allowance'))
                 .outputs(toWei('50'))
                 .equal(ret)
+        })
+
+    })
+
+    describe('increaseAllowance and decreaseAllowance', async () => {
+
+        it('decreaseAllowance greater than allowance should revert', async () => {
+            const ret = await thor.account(address)
+                .method(myToken.ABI('decreaseAllowance'))
+                .caller(addrOne)
+                .call(addrTwo, toWei(51))
+
+            Assertion
+                .revert()
+                .with('VIP180: decreased allowance below zero')
+                .equal(ret)
+        })
+
+        it('decreaseAllowance should emit Approval event', async () => {
+            const ret = await thor.account(address)
+                .method(myToken.ABI('decreaseAllowance'))
+                .caller(addrOne)
+                .call(addrTwo, toWei(10))
+
+            assert.isFalse(ret.reverted, 'Should not be reverted')
+            assert.equal(ret.events.length, 1, 'Should emit one event')
+            Assertion
+                .event(myToken.ABI('Approval', 'event'))
+                .by(address)
+                .logs(addrOne, addrTwo, toWei(40))
+                .equal(ret.events[0])
+        })
+
+        it('increaseAllowance should emit Approval event', async () => {
+            const ret = await thor.account(address)
+                .method(myToken.ABI('increaseAllowance'))
+                .caller(addrOne)
+                .call(addrTwo, toWei(10))
+
+            assert.isFalse(ret.reverted, 'Should not be reverted')
+            assert.equal(ret.events.length, 1, 'Should emit one event')
+            Assertion
+                .event(myToken.ABI('Approval', 'event'))
+                .by(address)
+                .logs(addrOne, addrTwo, toWei(60))
+                .equal(ret.events[0])
         })
 
     })
