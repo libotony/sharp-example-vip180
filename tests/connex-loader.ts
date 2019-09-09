@@ -32,7 +32,7 @@ const genesis = {
     transactions: []
 }
 
-const net = new SimpleNet('http://localhost:8668')
+const net = new SimpleNet(process.env.THOR_REST as string)
 const driver = new Driver(net, genesis, undefined, wallet)
 const connex = new Framework(driver)
 

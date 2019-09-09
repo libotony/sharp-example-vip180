@@ -1,4 +1,4 @@
-import 'sharp-cli'
+import 'sharp-cli/script'
 import { ContractMeta, Awaiter } from 'sharp'
 
 const myTokenContract = require('../output/MyToken.json')
