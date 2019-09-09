@@ -87,7 +87,7 @@ Command `sharp-cli test [task]` will start a solo node in the background and the
 
 ### 0x00 - setup connex
 
-We need to setup `connex` first, to run the tests `sharp-cli` will start a solo node in the background and set the environment variable `THOR_REST` for us to initiate connex. See [connex-loader]('./tests/connex-loader.ts') for the detail.
+We need to setup `connex` first, to run the tests `sharp-cli` will start a solo node in the background and set the environment variable `THOR_REST` for us to initiate connex. See [connex-loader](./tests/connex-loader.ts) for the detail.
 
 ``` typescript
 import { Framework } from '@vechain/connex-framework'
@@ -260,7 +260,7 @@ Assertion
 
 ### 0x99
 
-The full detailed contract tests are in [tests]('./tests/') folder.
+The full detailed contract tests are in [tests](./tests/) folder.
 
 ## Write user scripts
 
