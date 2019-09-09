@@ -1,6 +1,6 @@
 # Sharp example project
 
-Compile/Test/Deploy/Interact solidity written contracts by *CONNEX*.
+Compile/Test/Deploy/Interact with contracts by *CONNEX*.
 
 ## Overview
 
@@ -82,6 +82,9 @@ npm run deploy
 ```
 
 ## Write test suites
+
+Command `sharp-cli test [task]` will start a solo node in the background and then start a npm task which is aiming to run tests. The task can be specified by the user, this makes it possible for user to choose there favorite test frameworks. In the example, I used the well know framework `mocha` and the test task named `sharp`.
+
 
 
 ## Write user scripts
