@@ -71,8 +71,6 @@ npm run compile
 npm run test/npm test/npm t
 ```
 
-**Notes:** You need specify `--exit` which forces mocha to quit after tests complete.
-
 ### Deploy contract
 
 `sharp-cli exec [file]` will create a running environment for user script, it is useful for developers deploying contracts or running customized scripts. In this project I made an example of deploying the contract.
@@ -242,9 +240,9 @@ Assertion
     .equal(ret)
 ```
 
-### 0x06 revert message assertion
+### 0x06 - revert message assertion
 
-In the early age of writing contracts, we even don't which part revert of a method failed. Luckily we got revert after the `early age`.
+In the early age of writing contracts, we even don't which part revert of a method failed. Luckily we got revert after that.
 
 ``` typescript
 const ret = await thor.account(address)
@@ -257,6 +255,61 @@ Assertion
     .with('VIP180: transfer to the zero address')
     .equal(ret)
 ```
+
+### 0x07 - VET transfer assertion
+
+``` typescript
+const { txid } = await vendor.sign('tx')
+    .signer(addrOne)
+    .request([{
+        to: addrTwo,
+        value: toWei(100)
+    }])
+
+const receipt = await Awaiter.receipt(thor.transaction(txid), thor.ticker())
+
+assert.isFalse(receipt.reverted, 'Should not be reverted')
+assert.equal(receipt.outputs[0].transfers.length, 1, 'Clause#0 should emit one transfer log')
+Assertion
+    .transfer()
+    .logs(addrOne, addrTwo, toWei(100))
+    .equal(receipt.outputs[0].transfers[0])
+```
+
+### 0x98 - setup NPM script
+
+Setting up the npm task is just the same as running tests of JS/TS project. The only difference is you need set the `test` to `sharp-cli test [npm task]`.
+
+``` javascript
+// package.json
+{  
+    "scripts": {
+        "test": "sharp-cli test sharp",
+        "sharp": "NODE_ENV=test mocha './tests/my-token.test.ts'",
+    }
+}
+```
+
+In this project we write test codes in typescript, so we need require the register for TS.
+
+``` javascript
+{  
+    
+    "sharp": "NODE_ENV=test mocha --require ts-node/register './tests/my-token.test.ts'",
+}
+```
+
+You may find out mocha will not exist after all tests are done, simply specify `--exit` to force mocha to quit after tests complete.
+
+
+``` javascript
+{  
+    
+    "sharp": "NODE_ENV=test mocha --require ts-node/register --exit './tests/my-token.test.ts'",
+}
+```
+
+Then, `npm test` will work as we expected.
 
 ### 0x99
 
