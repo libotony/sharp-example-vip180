@@ -65,7 +65,7 @@ Just run the following command, `sharp-cli` will read configurations from `packa
 npm run compile
 ```
 
-### Running tests
+### Run tests
 
 ``` shell
 npm run test/npm test/npm t
@@ -293,8 +293,7 @@ Setting up the npm task is just the same as running tests of JS/TS project. The 
 In this project we write test codes in typescript, so we need require the register for TS.
 
 ``` javascript
-{  
-    
+{
     "sharp": "NODE_ENV=test mocha --require ts-node/register './tests/my-token.test.ts'",
 }
 ```
@@ -303,8 +302,7 @@ You may find out mocha will not exist after all tests are done, simply specify `
 
 
 ``` javascript
-{  
-    
+{
     "sharp": "NODE_ENV=test mocha --require ts-node/register --exit './tests/my-token.test.ts'",
 }
 ```
@@ -317,3 +315,74 @@ The full detailed contract tests are in [tests](./tests/) folder.
 
 ## Write user scripts
 
+`sharp-cli exec [file]` will expose `connex` and `wallet` in the global context of node which will make developers feel like executing the script in the [sync](https://env.vechain.org).
+
+For the script, `sharp` expects it export a function as the default export:
+
+``` typescript
+// CommonJS
+module.exports = function async(){
+
+}
+
+// ECMAScript module
+const main = async ()=>{
+
+}
+export default main
+```
+
+Here we write a script deploying the contract as an example:
+
+``` typescript
+// Import the script typings of extended global context, only necessary in typescript
+import 'sharp-cli/script'
+import { ContractMeta, Awaiter } from 'sharp'
+
+const myTokenContract = require('../output/MyToken.json')
+const myToken = new ContractMeta(myTokenContract.abi, myTokenContract.bytecode)
+
+const thor = global.connex.thor
+const vendor = global.connex.vendor
+const wallet = global.wallet
+
+// Set up wallets, the private key is sensitive information, you may need to get from environment
+// wallet.import(process.env['ACC_PRIV '])
+wallet.import('...')
+
+const main = async () => {
+
+    const { txid } = await vendor
+        .sign('tx')
+        .request([myToken.deploy().asClause()])
+
+    console.log(`tx sent: ${txid}, waiting receipt......`)
+    const receipt = await Awaiter.receipt(thor.transaction(txid), thor.ticker())
+    if (receipt.reverted) {
+        console.log('Failed to deploy contract')
+    } else {
+        console.log('Contract deployed at ' + receipt.outputs[0].contractAddress)
+    }
+
+}
+```
+
+Then setup the script in NPM script:
+
+``` javascript
+// package.json
+{  
+    "scripts": {
+        "deploy": "sharp-cli exec scripts/deploy-my-token.ts"
+    }
+}
+```
+
+Add the register of TS:
+
+``` javascript
+// package.json
+{  
+    "deploy": "sharp-cli exec scripts/deploy-my-token.ts --require ts-node/register"
+}
+```
