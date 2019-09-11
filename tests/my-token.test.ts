@@ -1,4 +1,4 @@
-import { ContractMeta, Awaiter, Assertion } from 'sharp'
+import { ContractMeta, Awaiter, Assertion } from '@libotony/sharp'
 import { assert } from 'chai'
 import { connex, wallet } from './connex-loader'
 import { toWei, fromWei } from './utils'

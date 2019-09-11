@@ -26,15 +26,15 @@
     "typescript": "^3.6.2"
   },
   "dependencies": {
+    "@libotony/sharp": "^1.0.0-beta.1",
+    "@libotony/sharp-cli": "^1.0.0-beta.1",
     "@types/chai": "^4.2.0",
     "@types/mocha": "^5.2.7",
     "@vechain/connex-framework": "^1.1.0",
     "@vechain/connex.driver-nodejs": "^1.1.4",
     "bignumber.js": "^9.0.0",
     "chai": "^4.2.0",
-    "mocha": "^6.2.0",
-    "sharp": "git+https://github.com/libotony/sharp.git",
-    "sharp-cli": "git+https://github.com/libotony/sharp-cli.git"
+    "mocha": "^6.2.0"
   },
   "sharp": {
     "contracts_directory": "contracts",

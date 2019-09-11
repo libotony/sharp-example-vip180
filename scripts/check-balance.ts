@@ -1,5 +1,5 @@
-import 'sharp-cli/script'
-import { ContractMeta } from 'sharp'
+import '@libotony/sharp-cli/script'
+import { ContractMeta } from '@libotony/sharp'
 
 const account = '0x7567d83b7b8d80addcb281a71d54fc7b3364ffed'
 const contractAddress = '0x921b47242b347c5e214a26316e5c284fba8ebaff'

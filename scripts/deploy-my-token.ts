@@ -1,5 +1,5 @@
-import 'sharp-cli/script'
-import { ContractMeta, Awaiter } from 'sharp'
+import '@libotony/sharp-cli/script'
+import { ContractMeta, Awaiter } from '@libotony/sharp'
 
 const myTokenContract = require('../output/MyToken.json')
 const myToken = new ContractMeta(myTokenContract.abi, myTokenContract.bytecode)
