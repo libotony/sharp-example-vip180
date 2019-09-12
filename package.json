@@ -6,7 +6,7 @@
   "scripts": {
     "test": "sharp-cli test",
     "solo": "node -e \"setInterval(()=>{},1000);\"",
-    "sharp": "NODE_ENV=test mocha --require ts-node/register --timeout 20000 --exit './tests/my-token.test.ts'",
+    "sharp": "mocha --require ts-node/register --timeout 20000 --exit './tests/my-token.test.ts'",
     "compile": "sharp-cli compile"
   },
   "repository": {
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@libotony/sharp": "^1.0.0-beta.1",
-    "@libotony/sharp-cli": "^1.0.0-beta.1",
+    "@libotony/sharp-cli": "^1.0.0-beta.2",
     "@types/chai": "^4.2.0",
     "@types/mocha": "^5.2.7",
     "@vechain/connex-framework": "^1.1.0",
