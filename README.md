@@ -23,6 +23,12 @@ Compile/Test/Deploy/Interact with contracts by *CONNEX*.
 └── tests         # tests
 ```
 
+## Bootstrap
+
+``` shell
+npm i @libotony/sharp @libotony/sharp-cli --save
+```
+
 ## Setup compiler
 
 Configuration of sharp is located in `package.json`, under the namespace of `sharp`. For the complete guide of configuration, check [sharp-cli](https://github.com/libotony/sharp-cli). In this project we just need to specify the files need to to be compiled in `sharp.contracts`. 
@@ -43,19 +49,7 @@ Configuration of sharp is located in `package.json`, under the namespace of `sha
 }
 ```
 
-## Setup NPM scripts
-
-``` javascript
-// package.json
-{  
-    "scripts": {
-        "compile": "sharp-cli compile",
-        "test": "sharp-cli test ",
-        "sharp": "NODE_ENV=test mocha --require ts-node/register --timeout 20000 --exit './tests/my-token.test.ts'",
-        "deploy": "sharp-cli exec scripts/deploy-my-token.ts --require ts-node/register"
-    }
-}
-```
+## NPM scripts
 
 ### Compile contract
 
@@ -285,7 +279,7 @@ Setting up the npm task is just the same as running tests of JS/TS project. The 
 {  
     "scripts": {
         "test": "sharp-cli test sharp",
-        "sharp": "NODE_ENV=test mocha './tests/my-token.test.ts'",
+        "sharp": "mocha './tests/my-token.test.ts'",
     }
 }
 ```
@@ -294,7 +288,7 @@ In this project we write test codes in typescript, so we need require the regist
 
 ``` javascript
 {
-    "sharp": "NODE_ENV=test mocha --require ts-node/register './tests/my-token.test.ts'",
+    "sharp": "mocha --require ts-node/register './tests/my-token.test.ts'",
 }
 ```
 
@@ -303,7 +297,7 @@ You may find out mocha will not exist after all tests are done, simply specify `
 
 ``` javascript
 {
-    "sharp": "NODE_ENV=test mocha --require ts-node/register --exit './tests/my-token.test.ts'",
+    "sharp": "mocha --require ts-node/register --exit './tests/my-token.test.ts'",
 }
 ```
 
@@ -347,7 +341,7 @@ const vendor = global.connex.vendor
 const wallet = global.wallet
 
 // Set up wallets, the private key is sensitive information, you may need to get from environment
-// wallet.import(process.env['ACC_PRIV '])
+// wallet.import(process.env['ACC_PRIV'])
 wallet.import('...')
 
 const main = async () => {
@@ -386,3 +380,7 @@ Add the register of TS:
     "deploy": "sharp-cli exec scripts/deploy-my-token.ts --require ts-node/register"
 }
 ```
+
+## CI - Travis
+
+see [.travis.yml](./.travis.yml)
