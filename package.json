@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@libotony/sharp": "^1.0.0-beta.1",
-    "@libotony/sharp-cli": "^1.0.0-beta.2",
+    "@libotony/sharp-cli": "^1.0.0-beta.3",
     "@types/chai": "^4.2.0",
     "@types/mocha": "^5.2.7",
     "@vechain/connex-framework": "^1.1.0",
