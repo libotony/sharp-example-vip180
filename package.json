@@ -34,7 +34,7 @@
     "@vechain/connex.driver-nodejs": "^1.1.4",
     "bignumber.js": "^9.0.0",
     "chai": "^4.2.0",
-    "mocha": "^6.2.0"
+    "mocha": "^10.2.0"
   },
   "sharp": {
     "contracts_directory": "contracts",
